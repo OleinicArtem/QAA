@@ -6,19 +6,11 @@ import org.apache.logging.log4j.Logger;
 import org.example.pom.FormPom;
 import org.example.utils.Driver;
 import org.example.utils.StepScreenshots;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.util.Objects;
 
 public class FormTest {
 
@@ -26,17 +18,17 @@ public class FormTest {
 
     static public WebDriver driver;
     static public String URL = "https://demoqa.com/";
-    static public String FIRST_NAME = "Eduard";
-    static public String LAST_NAME = "Iateniuc";
-    static public String EMAIL = "eduardaceman@gmail.com";
+    static public String FIRST_NAME = "Artem";
+    static public String LAST_NAME = "Oleinic";
+    static public String EMAIL = "zemfir2312@gmail.com";
     static public String GENDER = "Male";
-    static public String MOBILE = "0683934022";
-    static public int BIRTH_DAY = 01;
+    static public String MOBILE = "0671234567";
+    static public int BIRTH_DAY = 1;
     static public String BIRTH_MONTH = "January";
     static public String BIRTH_YEAR = "2000";
     static public String SUBJECT = "Maths";
     static public String STATE = "Haryana";
-    static public String ADDRESS = "Chisinau, Test street 10";
+    static public String ADDRESS = "Chisinau, Linkoln street 10";
 
     static public String CITY = "Karnal";
     static public String HOBBY = "Music";
@@ -46,7 +38,7 @@ public class FormTest {
     @BeforeMethod
     public void beforeMethod() {
         log.info("Starting test setup");
-        driver = Driver.getRemoteDriver();
+        driver = Driver.getDriverFromEnv();
         driver.manage().window().maximize();
         log.info("Driver initialized and window maximized");
     }
