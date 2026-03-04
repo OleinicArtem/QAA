@@ -49,9 +49,17 @@ public class FormPom {
     public void openPracticeForm() {
         StepScreenshots.before(driver, "Open Practice Form");
         log.info("Opening Practice Form");
-        wait.until(ExpectedConditions.elementToBeClickable(formsCard)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(practiceFormMenu)).click();
+
         closeAdvert();
+
+        WebElement forms = wait.until(ExpectedConditions.presenceOfElementLocated(formsCard));
+        js.executeScript("arguments[0].scrollIntoView({block:'center'});", forms);
+        js.executeScript("arguments[0].click();", forms);
+
+        WebElement practice = wait.until(ExpectedConditions.presenceOfElementLocated(practiceFormMenu));
+        js.executeScript("arguments[0].scrollIntoView({block:'center'});", practice);
+        js.executeScript("arguments[0].click();", practice);
+
         StepScreenshots.after(driver, "Open Practice Form");
     }
 
@@ -189,15 +197,11 @@ public class FormPom {
 
     public void closeAdvert() {
         try {
-            js.executeScript("var elem = document.evaluate(\"//*[@id='adplus-anchor']\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;" +
-                    "if (elem && elem.parentNode) { elem.parentNode.removeChild(elem); }");
-        } catch (Exception ignored) {
-        }
-        try {
-            js.executeScript("var elem = document.evaluate(\"//footer\", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;" +
-                    "if (elem && elem.parentNode) { elem.parentNode.removeChild(elem); }");
-        } catch (Exception ignored) {
-        }
+            js.executeScript(
+                    "document.querySelectorAll('iframe, footer, #fixedban, .adsbygoogle')" +
+                            ".forEach(el => el.remove());"
+            );
+        } catch (Exception ignored) {}
     }
 
     private void type(By locator, String value) {
