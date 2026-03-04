@@ -46,7 +46,7 @@ public class FormTest {
     @BeforeMethod
     public void beforeMethod() {
         log.info("Starting test setup");
-        driver = Driver.getDriverFromEnv();
+        driver = Driver.getRemoteDriver();
         driver.manage().window().maximize();
         log.info("Driver initialized and window maximized");
     }
