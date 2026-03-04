@@ -125,13 +125,20 @@ public class FormPom {
         StepScreenshots.after(driver, "Set subject");
     }
 
-    @Step("Select hobby: {hobby}")
+    @Step("Set hobby: {0}")
     public void setHobby(String hobby) {
-        StepScreenshots.before(driver, "Select hobby");
-        log.info("Selecting hobby: {}", hobby);
-        By hobbyLocator = By.xpath("//*[@id='hobbiesWrapper']//label[text()='" + hobby + "']");
-        wait.until(ExpectedConditions.elementToBeClickable(hobbyLocator)).click();
-        StepScreenshots.after(driver, "Select hobby");
+        log.info("Setting hobby: {}", hobby);
+
+        By hobbyLocator = By.xpath(
+                "//*[@id='hobbiesWrapper']//label[text()='" + hobby + "']"
+        );
+
+        WebElement hobbyElement = wait.until(
+                ExpectedConditions.presenceOfElementLocated(hobbyLocator)
+        );
+
+        js.executeScript("arguments[0].scrollIntoView({block:'center'});", hobbyElement);
+        js.executeScript("arguments[0].click();", hobbyElement);
     }
 
     @Step("Upload picture: {fileName}")
@@ -198,7 +205,7 @@ public class FormPom {
     public void closeAdvert() {
         try {
             js.executeScript(
-                    "document.querySelectorAll('iframe, footer, #fixedban, .adsbygoogle')" +
+                    "document.querySelectorAll('iframe, footer, #fixedban')" +
                             ".forEach(el => el.remove());"
             );
         } catch (Exception ignored) {}
